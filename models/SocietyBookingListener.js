@@ -7,19 +7,14 @@ var societies = ['180 Degrees Consulting Society', 'Abacus Society', 'Advertisin
 // var fakeTweet = 'Technology Society'
 
 exports.reply = function(tweet) {
-  var found = false;
-  //console.log(societies);
-  //console.log(tweet.text);
-  for (var i = 0; i < societies.length && !found; i++) {
+
+  for (var i = 0; i < societies.length; i++) {
     if (tweet.text.includes(societies[i])) {
-      found = true;
-      console.log('truee');
-
-      // break;
+      console.log("TRUEEE");
+      return "Hi @" + tweet.user.screen_name +". The next booking for " + societies[i] + " is on blah blah";
     }
-    else {
-      return "Hi @" + tweet.user.screen_name +". Such a society does not exist!";
-    }
-
+    
   };
+      console.log("FALSEE");
+      return "Hi @" + tweet.user.screen_name +". Such a society does not exist!";
 };
