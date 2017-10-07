@@ -18,7 +18,7 @@ exports.reply = function(tweet) {
       // break;
     }
     else {
-      return "Hi @" + tweet.user.screen_name +". Such a society does not exit!";
+      return "Hi @" + tweet.user.screen_name +". Such a society does not exist!";
     }
 
   };
