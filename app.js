@@ -5,16 +5,17 @@ var secret = require("./secret")
 var Twitter = new TwitterPackage(secret)
 
 var json = require('./tweets.json')
-console.log(json.length)
-var jsonFirst = json[0]
-console.log(jsonFirst);
+// console.log(json.length)
+// var jsonFirst = json[0]
+// console.log(jsonFirst);
 
 
 Twitter.stream('statuses/filter', {track: '@UCLSocBot'}, function(stream) {
   stream.on('data', function(tweet) {
-    console.log(tweet.text);
+    // console.log(tweet.text);
     if (tweet.text.includes("#societybookings")) {
-
+      reply = BookingListener.reply(tweet);
+    };
   });
 
   stream.on('error', function(error) {

@@ -4,20 +4,18 @@ var societies = ['180 Degrees Consulting Society', 'Abacus Society', 'Advertisin
 
 // console.log(societies.length)
 
-var fakeTweet = 'Technology Society'
+// var fakeTweet = 'Technology Society'
 
-var found = false;
-for (var i = 0; i < societies.length && !found; i++) {
-  if (societies[i] === fakeTweet) {
-    found = true;
-    console.log('truee');
-    break;
+
+exports.reply = function(tweet) {
+  var found = false;
+  //console.log(societies);
+  //console.log(tweet.text);
+  for (var i = 0; i < societies.length && !found; i++) {
+    if (tweet.text.includes(societies[i])) {
+      found = true;
+      console.log('truee');
+      // break;
+    }
   }
-}
-
-
-
-
-// exports.bookingListener = function(tweet) {
-
-// };
+};
