@@ -4,6 +4,9 @@ var secret = require("./secret")
 
 var Twitter = new TwitterPackage(secret)
 
+var json = require('./tweets.json')
+console.log(json);
+
 Twitter.post('statuses/update', {status: 'Hi, I am the UCL Society bookings bot'},  function(error, tweet, response){
   if(error){
     console.log(error);
