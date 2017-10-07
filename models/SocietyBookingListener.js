@@ -6,7 +6,6 @@ var societies = ['180 Degrees Consulting Society', 'Abacus Society', 'Advertisin
 
 // var fakeTweet = 'Technology Society'
 
-
 exports.reply = function(tweet) {
   var found = false;
   //console.log(societies);
@@ -15,7 +14,12 @@ exports.reply = function(tweet) {
     if (tweet.text.includes(societies[i])) {
       found = true;
       console.log('truee');
+
       // break;
     }
-  }
+    else {
+      return "Hi @" + tweet.user.screen_name +". Such a society does not exit!";
+    }
+
+  };
 };

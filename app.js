@@ -14,7 +14,11 @@ Twitter.stream('statuses/filter', {track: '@UCLSocBot'}, function(stream) {
   stream.on('data', function(tweet) {
     // console.log(tweet.text);
     if (tweet.text.includes("#societybookings")) {
-      reply = BookingListener.reply(tweet);
+      bookingReply = BookingListener.reply(tweet);
+      bookObj = {status: bookingReply}
+      Twitter.post('statuses/update', bookObj,  function(error, tweetReply, response){
+        console.log(tweetReply)
+      });
     };
   });
 
