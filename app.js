@@ -10,14 +10,11 @@ console.log(json.length)
 
 var arrayLength = json.length;
 for (var i = 0; i < arrayLength; i++) {
-    console.log(json[i]);
-    //Do something
+  Twitter.post('statuses/update', {status: json[i]},  function(error, tweet, response){
+    if(error){
+      console.log(error);
+    }
+    console.log(tweet);  // Tweet body.
+    console.log(response);  // Raw response object.
+  });
 }
-
-Twitter.postt('statuses/update', {status: jsonFirst},  function(error, tweet, response){
-  if(error){
-    console.log(error);
-  }
-  console.log(tweet);  // Tweet body.
-  console.log(response);  // Raw response object.
-});
