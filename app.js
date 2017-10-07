@@ -5,9 +5,11 @@ var secret = require("./secret")
 var Twitter = new TwitterPackage(secret)
 
 var json = require('./tweets.json')
-console.log(json);
+console.log(json[0]);
 
-Twitter.post('statuses/update', {status: 'Hi, I am the UCL Society bookings bot'},  function(error, tweet, response){
+var jsonFirst = json[0]
+
+Twitter.post('statuses/update', {status: jsonFirst},  function(error, tweet, response){
   if(error){
     console.log(error);
   }
