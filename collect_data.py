@@ -1,49 +1,56 @@
 import requests
 import json
+import tweepy
 
 with open("secret.json", 'r') as f:
     secret = json.load(f)
 
-params = {
-    "token": secret['uclapikey'],
-    "results_per_page": "1000",
-    "contact": "Society"
-}
+with open("weird_socs.json", 'r') as f:
+    weird_socs = json.load(f)
 
-req = requests.get(
-    "https://uclapi.com/roombookings/bookings",
-    params=params
-)
-resp = req.json()
+bookings = []
 
-print(resp)
+for search_term in weird_socs + ["Society"]:
 
-bookings = resp["bookings"]
-
-next_page = resp["next_page_exists"]
-counter = 0
-while next_page:
-    page_token = resp["page_token"]
     params = {
         "token": secret['uclapikey'],
-        "page_token": page_token
+        "results_per_page": "1000",
+        "contact": search_term
     }
-    pagination_req = requests.get(
+
+    req = requests.get(
         "https://uclapi.com/roombookings/bookings",
         params=params
     )
-    pagination_resp = pagination_req.json()
-    bookings += pagination_resp["bookings"]
-    if pagination_resp["next_page_exists"] and counter < 11:
-        next_page = True
-        counter += 1
-    else:
-        next_page = False
+    resp = req.json()
 
-with open('bookings.json', 'w') as f:
-    f.write(
-        json.dumps({
-            "bookings": bookings
-        }, sort_keys=True, indent=4)
-    )
+    print(resp)
 
+    bookings += resp["bookings"]
+
+    next_page = resp["next_page_exists"]
+    counter = 0
+    while next_page:
+        page_token = resp["page_token"]
+        params = {
+            "token": secret['uclapikey'],
+            "page_token": page_token
+        }
+        pagination_req = requests.get(
+            "https://uclapi.com/roombookings/bookings",
+            params=params
+        )
+        pagination_resp = pagination_req.json()
+        bookings += pagination_resp["bookings"]
+        if pagination_resp["next_page_exists"] and counter < 11:
+            next_page = True
+            counter += 1
+        else:
+            next_page = False
+
+    with open('bookings.json', 'w') as f:
+        f.write(
+            json.dumps({
+                "bookings": bookings
+            }, sort_keys=True, indent=4)
+        )

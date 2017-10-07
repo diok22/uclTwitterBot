@@ -10,7 +10,7 @@ body = {
     "bookings_added": [
       {
         "phone": None,
-        "contact": "Jane Smith - UCL Some Society",
+        "contact": "Jane Smith - UCL Whatever Society",
         "weeknumber": 52,
         "description": "Rm. Closed",
         "start_time": "2017-08-27T23:00:00+01:00",
