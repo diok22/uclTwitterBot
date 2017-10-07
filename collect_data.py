@@ -1,6 +1,9 @@
 import requests
 import json
-import tweepy
+from make_string import next_booking, epoch
+
+"""Fetches all the bookings for societies from UCL API and stores appropriate messages in tweets.json.
+These are used when responding to tweets."""
 
 with open("secret.json", 'r') as f:
     secret = json.load(f)
@@ -10,7 +13,7 @@ with open("weird_socs.json", 'r') as f:
 
 bookings = []
 
-for search_term in weird_socs + ["Society"]:
+for search_term in weird_socs + ["Society", "Club"]:
 
     params = {
         "token": secret['uclapikey'],
@@ -48,9 +51,8 @@ for search_term in weird_socs + ["Society"]:
         else:
             next_page = False
 
-    with open('bookings.json', 'w') as f:
+    with open('tweets.json', 'w') as f:
         f.write(
-            json.dumps({
-                "bookings": bookings
-            }, sort_keys=True, indent=4)
+            json.dumps([{"society": x["contact"].split("- ")[1], "booking": next_booking(x),
+                         "time": epoch(x["start_time"])} for x in bookings], sort_keys=True, indent=4)
         )

@@ -1,8 +1,8 @@
 import json
 import tweepy
-
+import re
 from flask import Flask, request
-from make_string import tweet_text
+from make_string import tweet_text, next_booking, epoch
 
 app = Flask(__name__)
 
@@ -15,8 +15,12 @@ auth.set_access_token(secret['access_token_key'], secret['access_token_secret'])
 
 twitter = tweepy.API(auth)
 
+
 def society(str):
-    return bool(re.search(r"(Club|Society|Application of Psychedelics|Chinese Students and Scholars Association|Christian Union|Effective Altruism|European Law Students Association|Guild|Hiking & Walking|Kinesis Magazine|Law for All|Pi Media|Pole Fitness|Red Star FC|SAVAGE Journal|Snooker and Pool|Student Action for Refugees|TherouxSoc)", str))
+    return bool(re.search(
+        r"(Club|Society|Application of Psychedelics|Chinese Students and Scholars Association|Christian Union|Effective Altruism|European Law Students Association|Guild|Hiking & Walking|Kinesis Magazine|Law for All|Pi Media|Pole Fitness|Red Star FC|SAVAGE Journal|Snooker and Pool|Student Action for Refugees|TherouxSoc)",
+        str))
+
 
 @app.route("/", methods=["POST"])
 def index():
@@ -32,11 +36,18 @@ def index():
             tweets = json.load(f)
 
         for x in request_data["content"]["bookings_added"]:
-            if society(x["contact"]):
+            society_name = society(x["contact"])
+            if society_name:
                 twitter.update_status(tweet_text(x))
-                tweets.append(tweet_text(x))
+                tweets.append({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
+                               "time": epoch(x['start_time'])})
 
         with open("tweets.json", "w") as f:
             json.dump(tweets, f)
 
     return ""
+
+
+@app.route("/home", methods=["GET"])
+def home():
+    return app.send_static_file('webfront.html')

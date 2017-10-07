@@ -1,4 +1,4 @@
-"""Run this script to test the bookings endpoint."""
+"""Run this script to simulate something being sent by the bookings endpoint."""
 
 import requests
 
@@ -10,7 +10,7 @@ body = {
     "bookings_added": [
       {
         "phone": None,
-        "contact": "Jane Smith - UCL Whatever Society",
+        "contact": "Jane Smith - UCL anynew Society",
         "weeknumber": 52,
         "description": "Rm. Closed",
         "start_time": "2017-08-27T23:00:00+01:00",
@@ -24,4 +24,4 @@ body = {
   }
 }
 
-requests.post("https://abb44d08.ngrok.io", json=body)
+requests.post("https://a6bdcce2.ngrok.io", json=body)
