@@ -2,3 +2,5 @@
 secret.json
 *.json
 .idea/*
+*.pyc
+ngrok

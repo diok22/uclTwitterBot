@@ -6,12 +6,18 @@ with open("bookings.json", 'r') as f:
 
 tweets = []
 
-for booking in bookings["bookings"]:
+
+def tweet_text(booking):
     society = (booking["contact"].split("- ")[1])
     start = datetime.strptime(booking["start_time"][:-6], "%Y-%m-%dT%H:%M:%S")
-    tweets.append("{} just booked {} for {}".format(society, booking['roomname'], start.strftime("%A %d %B at %H:%M")))
+    return "{} just booked {} for {}".format(society, booking['roomname'], start.strftime("%A %d %B at %H:%M"))
+
+for booking in bookings["bookings"]:
+    tweets.append(tweet_text(booking))
+
+
 
 # print(tweets)
 print(len(tweets))
 with open("tweets.json", "w") as f:
-    json.dump(tweets, f)
+    json.dump(tweets[:5], f)
