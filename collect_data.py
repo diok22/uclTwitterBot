@@ -1,6 +1,6 @@
 import requests
 import json
-from make_string import next_booking, epoch
+from make_string import next_booking, epoch, is_after_today
 
 """Fetches all the bookings for societies from UCL API and stores appropriate messages in tweets.json.
 These are used when responding to tweets."""
@@ -54,5 +54,6 @@ for search_term in weird_socs + ["Society", "Club"]:
     with open('tweets.json', 'w') as f:
         f.write(
             json.dumps([{"society": x["contact"].split("- ")[1], "booking": next_booking(x),
-                         "time": epoch(x["start_time"])} for x in bookings], sort_keys=True, indent=4)
+                         "time": epoch(x["start_time"])} for x in bookings if is_after_today(x["start_time"])],
+                       sort_keys=True, indent=4)
         )
