@@ -3,6 +3,7 @@ import tweepy
 import re
 from flask import Flask, request
 from make_string import tweet_text, next_booking, epoch
+from tweepy import TweepError
 
 app = Flask(__name__)
 
@@ -38,7 +39,10 @@ def index():
         for x in request_data["content"]["bookings_added"]:
             society_name = is_society(x["contact"])
             if society_name:
-                twitter.update_status(tweet_text(x))
+                try:
+                    twitter.update_status(tweet_text(x))
+                except TweepError:
+                    pass
                 tweets.append({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
                                "time": epoch(x['start_time'])})
 
@@ -46,8 +50,3 @@ def index():
             json.dump(tweets, f)
 
     return ""
-
-
-@app.route("/home", methods=["GET"])
-def home():
-    return app.send_static_file('webfront.html')
