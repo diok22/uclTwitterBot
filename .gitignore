@@ -1,6 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 secret.json
-*.json
 .idea/*
 *.pyc
 ngrok
+bookings.json
