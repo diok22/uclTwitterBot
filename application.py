@@ -36,15 +36,25 @@ def index():
         with open("tweets.json", "r") as f:
             tweets = json.load(f)
 
-        for x in request_data["content"]["bookings_added"]:
-            society_name = is_society(x["contact"])
-            if society_name:
-                try:
-                    twitter.update_status(tweet_text(x))
-                except TweepError:
-                    pass
-                tweets.append({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
-                               "time": epoch(x['start_time'])})
+        try:
+            for x in request_data["content"]["bookings_added"]:
+                if is_society(x["contact"]):
+                    try:
+                        twitter.update_status(tweet_text(x))
+                    except TweepError as e:
+                        raise Warning(e)
+                    tweets.append({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
+                                   "time": epoch(x['start_time'])})
+        except KeyError:
+            print("No bookings to be added...")
+
+        try:
+            for x in request_data["content"]["bookings_removed"]:
+                if is_society(x["contact"]):
+                    tweets.remove({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
+                                   "time": epoch(x['start_time'])})
+        except KeyError:
+            print("No bookings to be removed...")
 
         with open("tweets.json", "w") as f:
             json.dump(tweets, f)
