@@ -4,9 +4,6 @@ var secret = require("./secret")
 
 var Twitter = new TwitterPackage(secret)
 
-var json = require('./tweets.json')
-
-
 Twitter.stream('statuses/filter', {track: '@UCLSocBot'}, function(stream) {
   stream.on('data', function(tweet) {
     // console.log(tweet.text);
