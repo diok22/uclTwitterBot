@@ -14,11 +14,9 @@ for (var i = 0; i < societies.length; i++) {
   //console.log(soc);
 };
 
-faketweet = {text: "Technology Society", screen_name: "Dio"}
+//faketweet = {text: "Technology Society", screen_name: "Dio"}
 
-//exports.reply
-//tweet.user.screen_name
-reply = function(tweet) {
+exports.reply = function(tweet) {
 
   for (var i = 0; i < societies.length; i++) {
     if (tweet.text.includes(societies[i])) {
@@ -28,18 +26,13 @@ reply = function(tweet) {
       filterSoc.sort(function(a, b){
         return a.time-b.time
       })
-        console.log(filterSoc)
+        // console.log(filterSoc)
 
-      console.log('hooray');
-      console.log("Hi @" + tweet.screen_name + filterSoc[0].booking);
-      return;
-      //return "Hi @" + tweet.screen_name +
+      return ("@" + tweet.user.screen_name + " " + filterSoc[0].booking);
     }
 
 
   };
     console.log('hoorayNot');
-    return "Hi @" + tweet.screen_name +". Such a society does not exist!";
+    return "@" + tweet.user.screen_name +". Such a society does not exist!";
 };
-
-reply(faketweet);
