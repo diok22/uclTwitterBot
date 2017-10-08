@@ -31,7 +31,9 @@ reply = function(tweet) {
         console.log(filterSoc)
 
       console.log('hooray');
-      return "Hi @" + tweet.screen_name +". The next booking for " + societies[i] + " is on blah blah";
+      console.log("Hi @" + tweet.screen_name + filterSoc[0].booking);
+      return;
+      //return "Hi @" + tweet.screen_name +
     }
 
 
