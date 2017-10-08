@@ -16,7 +16,7 @@ auth.set_access_token(secret['access_token_key'], secret['access_token_secret'])
 twitter = tweepy.API(auth)
 
 
-def society(str):
+def is_society(str):
     return bool(re.search(
         r"(Club|Society|Application of Psychedelics|Chinese Students and Scholars Association|Christian Union|Effective Altruism|European Law Students Association|Guild|Hiking & Walking|Kinesis Magazine|Law for All|Pi Media|Pole Fitness|Red Star FC|SAVAGE Journal|Snooker and Pool|Student Action for Refugees|TherouxSoc)",
         str))
@@ -36,7 +36,7 @@ def index():
             tweets = json.load(f)
 
         for x in request_data["content"]["bookings_added"]:
-            society_name = society(x["contact"])
+            society_name = is_society(x["contact"])
             if society_name:
                 twitter.update_status(tweet_text(x))
                 tweets.append({"booking": next_booking(x), "society": x["contact"].split("- ")[1],
