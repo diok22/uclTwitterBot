@@ -25,7 +25,10 @@ reply = function(tweet) {
       var filterSoc = json.filter(function(soc){
         return societies[i] == soc.society;
       })
-        console.log(filterSoc[0].time)
+      filterSoc.sort(function(a, b){
+        return a.time-b.time
+      })
+        console.log(filterSoc)
 
       console.log('hooray');
       return "Hi @" + tweet.screen_name +". The next booking for " + societies[i] + " is on blah blah";
