@@ -13,7 +13,7 @@ body = {
         "contact": "Jane Smith - Excessive Roombooking Society",
         "weeknumber": 52,
         "description": "Rm. Closed",
-        "start_time": "2017-10-05T23:00:00+01:00",
+        "start_time": "2017-10-09T23:00:00+01:00",
         "roomid": "G08",
         "siteid": "013",
         "roomname": "Chadwick Building G08",
