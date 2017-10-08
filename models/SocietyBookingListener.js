@@ -14,7 +14,7 @@ for (var i = 0; i < societies.length; i++) {
   //console.log(soc);
 };
 
-faketweet = {text: "UCL Technology Society", screen_name: "Dio"}
+faketweet = {text: "Technology Society", screen_name: "Dio"}
 
 //exports.reply
 //tweet.user.screen_name
@@ -22,6 +22,11 @@ reply = function(tweet) {
 
   for (var i = 0; i < societies.length; i++) {
     if (tweet.text.includes(societies[i])) {
+      var filterSoc = json.filter(function(soc){
+        return societies[i] == soc.society;
+      })
+        console.log(filterSoc[0].time)
+
       console.log('hooray');
       return "Hi @" + tweet.screen_name +". The next booking for " + societies[i] + " is on blah blah";
     }
