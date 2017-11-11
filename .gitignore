@@ -4,3 +4,5 @@ secret.json
 *.pyc
 ngrok
 bookings.json
+
+.env

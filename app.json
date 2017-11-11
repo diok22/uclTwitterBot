@@ -1,0 +1,23 @@
+{
+  "name": "UCL SocBot",
+  "description": "Tweets UCL society room bookings as they happen.",
+  "repository": "https://github.com/diok22/uclTwitterBot",
+  "logo": "https://i.imgur.com/IsDrNjo.jpg",
+  "env": {
+    "UCLAPI_VERIFICATION_SECRET": {
+      "description": "The secret you get on the UCL API dashboard in the webhooks section of an app"
+    },
+    "TWITTER_CONSUMER_KEY": {
+      "description": "The Twitter consumer key"
+    },
+    "TWITTER_CONSUMER_SECRET": {
+      "description": "The Twitter consumer secret"
+    },
+    "TWITTER_ACCESS_TOKEN_KEY": {
+      "description": "The Twitter access token key"
+    },
+    "TWITTER_ACCESS_TOKEN_SECRET": {
+      "description": "The Twitter access token secret"
+    }
+  }
+}
