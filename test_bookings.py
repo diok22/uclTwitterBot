@@ -1,11 +1,12 @@
 """Run this script to simulate something being sent by the bookings endpoint."""
 
 import requests
+import os
 
 body = {
   "service": "roombookings",
   "name": "bookings_changed",
-  "verification_secret": "bc35f27d47742f7-c3bd7768defb2c2-1c556d86859419a-897b8dc9273691a",
+  "verification_secret": os.environ['UCLAPI_VERIFICATION_SECRET'],
   "content": {
     "bookings_added": [
       {
@@ -50,4 +51,4 @@ body = {
   }
 }
 
-requests.post("https://a6bdcce2.ngrok.io", json=body)
+requests.post("https://4800db9b.ngrok.io", json=body)
