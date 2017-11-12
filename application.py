@@ -1,18 +1,22 @@
 import json
 import tweepy
 import re
+import os
 from flask import Flask, request
-from make_string import tweet_text, next_booking, epoch
 from tweepy import TweepError
+
+from make_string import tweet_text, next_booking, epoch
 
 app = Flask(__name__)
 
-with open("secret.json", "r") as f:
-    secret = json.load(f)
-    webhook_secret = secret["webhook_secret"]
-
-auth = tweepy.OAuthHandler(secret['consumer_key'], secret['consumer_secret'])
-auth.set_access_token(secret['access_token_key'], secret['access_token_secret'])
+auth = tweepy.OAuthHandler(
+    os.environ['TWITTER_CONSUMER_KEY'],
+    os.environ['TWITTER_CONSUMER_SECRET']
+)
+auth.set_access_token(
+    os.environ['TWITTER_ACCESS_TOKEN_KEY'],
+    os.environ['TWITTER_ACCESS_TOKEN_SECRET']
+)
 
 twitter = tweepy.API(auth)
 
@@ -26,6 +30,12 @@ def is_society(str):
 @app.route("/", methods=["POST"])
 def index():
     request_data = json.loads(request.get_data())
+
+    if (
+        request_data["verification_secret"] !=
+        os.environ["UCLAPI_VERIFICATION_SECRET"]
+    ):
+        return "invalid verification_secret"
 
     if request_data["name"] == "challenge":
         print("Responding to challenge")
@@ -60,3 +70,7 @@ def index():
             json.dump(tweets, f)
 
     return ""
+
+
+if __name__ == "__main__":
+    app.run()
